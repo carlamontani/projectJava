@@ -41,7 +41,7 @@ public class Main {
 
     private static void agregarProductos(ArrayList<Producto> productos) {
         Producto p1 = new Producto("p1", 90,10);
-        Producto p2 = new Producto("p1", 90,10);
+        Producto p2 = new Producto("p1", 90,20);
         productos.add(p1);
         productos.add(p2);
     }
