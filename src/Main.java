@@ -53,7 +53,7 @@ public class Main {
                     boolean deleted = manager.deleteById(id);
                     System.out.println(deleted ? "Product deleted." : "Product not found.");
                 }
-                case 5 -> System.out.println("Create an Order");
+                case 5 -> System.out.println("Create a New Order");
                 case 6 -> System.out.println("List Orders");
                 case 7 -> System.out.println("Goodbye");
             }

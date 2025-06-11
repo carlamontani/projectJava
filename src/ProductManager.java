@@ -16,7 +16,7 @@ public class ProductManager {
                 new Product("Rug", 120.00, 5),
                 new Product("Frame", 15.25, 30),
                 new Product("Tiger Blanket", 25, 100),
-                new Product("Candles", 12.00, 40)
+                new Product("Candle", 12.00, 40)
         ));
     }
 
