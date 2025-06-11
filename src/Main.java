@@ -1,98 +1,63 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Producto> productos = new ArrayList<>();
-        agregarProductos(productos);
-        Scanner entrada = new Scanner(System.in);
-        int opcionUsuario;
+        ProductManager manager = new ProductManager();
+        manager.addDefaultProducts();
+        Scanner input = new Scanner(System.in);
+        int userOption;
 
-        //MENU
         do {
             System.out.println("""
-                        Menu Opciones:
-                        1. Agregar Producto
-                        2. Listar Productos
-                        3. Buscar / Actualizar Producto
-                        4. Eliminar Producto
-                        5. Crear un Pedido
-                        6. Listar Pedidos
-                        7. Salir
-                        
-                        Elija una opción:
-                        """);
+                    Options Menu:
+                    1. Add Product
+                    2. List Products
+                    3. Search / Update Product
+                    4. Delete Product
+                    5. Create an Order
+                    6. List Orders
+                    7. Exit
 
-            opcionUsuario = entrada.nextInt();
+                    Choose an option:
+                    """);
 
-            switch(opcionUsuario){
-                case 1 -> agregarProducto(productos);
-                case 2 -> listarProductos(productos);
-                case 3 -> modificarProducto(productos);
-                case 4 -> eliminarProducto(productos);
-                case 5 -> crearPedido();
-                case 6 -> listarPedidos();
-                case 7 -> Salir();
+            userOption = input.nextInt();
+            input.nextLine();
+
+            switch (userOption) {
+                case 1 -> {
+                    System.out.println("Enter product name:");
+                    String name = input.nextLine();
+                    System.out.printf("Enter price for %s: ", name);
+                    double price = input.nextDouble();
+                    System.out.printf("Enter stock for %s: ", name);
+                    int stock = input.nextInt();
+                    input.nextLine();
+                    manager.addProduct(new Product(name, price, stock));
+                    System.out.println("Product added.");
+                }
+                case 2 -> manager.listProducts();
+                case 3 -> {
+                    System.out.println("Enter product name to search:");
+                    String name = input.nextLine();
+                    Product found = manager.searchByName(name);
+                    if (found != null) {
+                        found.showInfo();
+                    } else {
+                        System.out.println("Product not found.");
+                    }
+                }
+                case 4 -> {
+                    System.out.println("Enter product ID to delete:");
+                    int id = input.nextInt();
+                    boolean deleted = manager.deleteById(id);
+                    System.out.println(deleted ? "Product deleted." : "Product not found.");
+                }
+                case 5 -> System.out.println("Create an Order");
+                case 6 -> System.out.println("List Orders");
+                case 7 -> System.out.println("Goodbye");
             }
 
-        } while (opcionUsuario != 7);
-
-    }
-
-    private static void agregarProductos(ArrayList<Producto> productos) {
-        Producto p1 = new Producto("p1", 90,10);
-        Producto p2 = new Producto("p1", 90,20);
-        productos.add(p1);
-        productos.add(p2);
-    }
-
-    private static void agregarProducto(ArrayList<Producto> productos) {
-        Scanner entrada = new Scanner(System.in);
-
-        System.out.println("nombre producto");
-        String nombre = entrada.nextLine();
-        System.out.printf("ingrese precio %s", nombre);
-        double precio = entrada.nextDouble();
-
-        System.out.printf("ingrese stock %s", nombre);
-        int stock = entrada.nextInt();
-
-        Producto producto = new Producto(nombre, precio, stock);
-
-        productos.add(producto);
-
-        System.out.println("producto cargado");
-    }
-
-    private static void listarProductos(ArrayList<Producto> productos) {
-        if (productos.isEmpty()) {
-            System.out.println("no hay productos cargados");
-        } else {
-            for (Producto producto : productos) {
-                producto.mostrarInfo();
-            }
-        }
-    }
-
-
-    private static void modificarProducto(ArrayList<Producto> productos) {
-        System.out.println("Buscar / Actualizar Producto");
-    }
-
-
-    private static void eliminarProducto(ArrayList<Producto> productos) {
-        System.out.println("Eliminar Producto");
-    }
-
-    private static void crearPedido() {
-        System.out.println("Crear un Pedido");
-    }
-
-    private static void listarPedidos() {
-        System.out.println("Listar Pedidos");
-    }
-
-    private static void Salir() {
-        System.out.println("Salir");
+        } while (userOption != 7);
     }
 }
